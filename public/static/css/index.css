@@ -14,3 +14,28 @@ body {
 .setting-form {
     margin-top: 30px;
 }
+
+.layui-panel {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.layui-list li {
+    position: relative;
+    height: 45px;
+    line-height: 22px;
+    padding: 15px 15px 15px 75px;
+    border-bottom: 1px dotted #e2e2e2;
+}
+
+.layui-list li i {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.block-center {
+    margin: 0 auto;
+    width: 100%;
+}

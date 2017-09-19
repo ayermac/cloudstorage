@@ -38,7 +38,7 @@ class Index extends Controller
             if(true !== $validate_result) {
                 $this->error($validate_result);
             } else {
-                $count= $this->user_setting_model->count($data['app_id']);
+                $count= $this->user_setting_model->where(['app_id'=>$data['app_id']])->count();
 
                 // 存在则更新，不存在新增
                 if ($count > 0) {

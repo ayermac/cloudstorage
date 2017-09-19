@@ -54,4 +54,13 @@
         </div>
     </div>
 </div>
-{include file="inc/footer" /}
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="/static/lib/vue/dev/vue.js"></script>
+<script src="/static/lib/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/js/modules/' // 你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['index']); // 加载入口
+</script>
+</body>
+</html>

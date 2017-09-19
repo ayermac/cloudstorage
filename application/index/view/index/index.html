@@ -15,4 +15,42 @@
         </ul>
     </header>
 </div>
+<div class="container-body">
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                <div class="layui-panel" id="mainlist">
+                    <ul class="layui-list">
+                        <table class="layui-table" lay-skin="line">
+                            <colgroup>
+                                <col width="90%">
+                                <col width="10%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>文件名</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in post">
+                                <td v-if="item.access_url">
+                                    <a href="javascript:;" :name="item.name">{{item.name}}</a>
+                                </td>
+                                <td v-else>
+                                    <i class="layui-icon">&#xe622;</i>
+                                    <a href="javascript:;" data-role="open_folder" type="d" :name="item.name">{{item.name}}</a>
+                                </td>
+                                <td>
+                                    <button class="layui-btn layui-btn-mini" type="button">删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {include file="inc/footer" /}
