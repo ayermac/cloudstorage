@@ -1,0 +1,57 @@
+{include file="inc/header" /}
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs10 layui-col-sm10 layui-col-md10 setting-form">
+            <form class="layui-form" action="{:url('/index/index/userSetting')}" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">存储桶名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bucketname" required  lay-verify="required" placeholder="bucketname" autocomplete="off" class="layui-input" value="{$setting.bucketname}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">AI</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="app_id" required  lay-verify="required" placeholder="app_id" autocomplete="off" class="layui-input" value="{$setting.app_id}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">SI</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="secret_id" required  lay-verify="required" placeholder="secret_id" autocomplete="off" class="layui-input" value="{$setting.secret_id}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">SK</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="secret_key" required  lay-verify="required" placeholder="secret_key" autocomplete="off" class="layui-input" value="{$setting.secret_key}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">区域</label>
+                    <div class="layui-input-block">
+                        <select name="region" lay-verify="required">
+                            <option value="sh" {if condition="$setting.region == 'sh'"} selected="selected" {/if}>华东</option>
+                            <option value="tj" {if condition="$setting.region == 'tj'"} selected="selected" {/if}>华北</option>
+                            <option value="gz" {if condition="$setting.region == 'gz'"} selected="selected" {/if}>华南</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">CDN</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="cdn" lay-skin="switch" lay-text="ON|OFF" {if condition="$setting.cdn == 'on'"} checked="checked" {/if}>
+                    </div>
+                </div>
+                <input type="hidden" name="__token__" value="{$Request.token}" />
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="setting">保存</button>
+                        <button type="button" class="layui-btn layui-btn-primary close-iframe">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="inc/footer" /}
