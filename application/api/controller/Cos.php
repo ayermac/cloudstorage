@@ -60,7 +60,7 @@ class Cos extends Controller {
      * 获取列表数据
      * url: /api/cos/getlist
      */
-    public function getList($folder = "/")
+    public function listFolder($folder = "/")
     {
         $ret = $this->cosApi->listFolder($this->bucket, $folder);
         return json($ret);

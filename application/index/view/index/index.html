@@ -39,7 +39,7 @@
                                 </td>
                                 <td v-else>
                                     <i class="layui-icon">&#xe622;</i>
-                                    <a href="javascript:;" data-role="open_folder" type="d" :name="item.name" class="open_folder">{{item.name}}</a>
+                                    <a href="javascript:;" data-role="open_folder" type="d" :name="item.name" @click="open_folder" class="open_folder">{{item.name}}</a>
                                 </td>
                                 <td>
                                     <button class="layui-btn layui-btn-mini" type="button">删除</button>
