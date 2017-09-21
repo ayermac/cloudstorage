@@ -19,26 +19,33 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports){
     });
 
     $('.open_setting').on('click', function () {
-        layer.open({
+        var index = layer.open({
             type: 2,
             title: '设置',
             shadeClose: false,
             shade: 0.6,
+            maxmin: false,
             area: ['600px', '500px'],
             content: '/index/index/setting' //iframe的url
         });
+        if(window.screen.width < 768) {
+            layer.full(index);
+        }
     });
 
     $('.open_upload').on('click', function () {
-        layer.open({
+        var index = layer.open({
             type: 2,
             title: '上传',
-            maxmin: true,
+            maxmin: false,
             shadeClose: false,
             shade: 0.6,
             area: ['600px', '500px'],
             content: '/index/index/uploadpage' //iframe的url
         });
+        if(window.screen.width < 768) {
+            layer.full(index);
+        }
     });
 
     // 监听提交
