@@ -22,11 +22,26 @@ layui.use(['layer'], function(){
                 });
             },
             open_folder: function (event) {
-                var $ = event.target;
-                url += $.name;
+                var $query = event.target;
+                url += $query.name;
                 window.history.pushState({}, 0, 'http://'+window.location.host+'/#/'+url);
                 var hash = window.location.hash.replace('#', '');
                 this.getList(hash);
+            },
+            preview_file: function (event) {
+                var $query = event.target
+                    ,file_url = $query.name;
+                console.log(file_url);
+                layer.open({
+                    type: 1,
+                    title: false,
+                    // area: ['800px', '600px'],
+                    offset: ['10%', '20%'],
+                    closeBtn: 0,
+                    shadeClose: true,
+                    skin: '',
+                    content: '<div><img src="' + file_url + '"></div>'
+                });
             }
         },
         watch: {
@@ -42,7 +57,7 @@ layui.use(['layer'], function(){
     $(function(){
        // Bind the event.
        $(window).hashchange( function(){
-           list.getList(window.location.hash.replace('#', ''));
+           list.getList(window.location.hash.replace('#', '') ? window.location.hash.replace('#', '') : '/');
            // 重置 url
            url = '';
        });
