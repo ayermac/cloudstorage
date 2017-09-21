@@ -6,6 +6,8 @@ layui.use(['layer'], function(){
         el: '#mainlist',
         data: {
             post: {}
+            ,cdn: ''
+            ,navbar: ''
         },
         methods: {
             getList: function (folder) {
@@ -23,6 +25,8 @@ layui.use(['layer'], function(){
                    success: function (res) {
                        if (res.code === 0) {
                            list.post = res.data.infos;
+                           list.cdn  = res.cdn;
+                           list.navbar = window.location.hash.replace('#', '');
                        } else {
                            layer.msg(res.message, function () {})
                        }
@@ -40,7 +44,7 @@ layui.use(['layer'], function(){
                 window.history.pushState({}, 0, 'http://'+window.location.host+'/#'+url);
                 // 获取当前 url hash 值
                 hash = window.location.hash.replace('#', '');
-                console.log(hash);
+                // console.log(hash);
                 this.getList(hash);
             },
             previewFile: function (event) {

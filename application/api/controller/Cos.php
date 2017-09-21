@@ -24,6 +24,7 @@ class Cos extends Controller {
     protected $user_setting_model;
     protected $cosApi;
     protected $bucket;
+    protected $cdn;
 
     public function _initialize()
     {
@@ -44,6 +45,8 @@ class Cos extends Controller {
         $config['timeout']     = $data['timeout'];
 
         $this->bucket = $data['bucketname'];
+        // 判断是否使用 cdn
+        $this->cdn    = $data['cdn'];
 
         $this->cosApi = new Api($config);
     }
@@ -62,7 +65,9 @@ class Cos extends Controller {
      */
     public function listFolder($folder = "/")
     {
-        $ret = $this->cosApi->listFolder($this->bucket, $folder);
+        $ret        = $this->cosApi->listFolder($this->bucket, $folder);
+        $ret['cdn'] = $this->cdn;
+
         return json($ret);
     }
 }

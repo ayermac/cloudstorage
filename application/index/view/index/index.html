@@ -1,5 +1,5 @@
 {include file="inc/header" /}
-<div class="container-body">
+<div class="container-header">
     <header>
         <ul class="layui-nav">
             <li class="layui-nav-item">
@@ -19,35 +19,40 @@
     <div class="layui-container">
         <div class="layui-row">
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
-                <div class="layui-panel layui-container-extend" id="mainlist" v-cloak>
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe642;</i>重命名</button>
+                </div>
+                <div class="layui-panel layui-container-extend layui-form" id="mainlist" v-cloak>
                     <div class="layui-loading-mask">
                         <div class="layui-loading-spinner">
                             <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop" style="font-size: 50px;"></i>
                             <p class="layui-loading-text">拼命加载中</p>
                         </div>
                     </div>
-                    <table class="layui-table" lay-skin="line">
+                    <span class="layui-breadcrumb">
+                      <a v-if="navbar === ''" href="">首页</a>
+                      <a v-else href="javascript:history.go(-1);"><i class="layui-icon">&#xe603;</i> 返回上一级</a>
+                    </span>
+                    <table class="layui-table" lay-even lay-skin="nob">
                         <colgroup>
-                            <col width="90%">
-                            <col width="10%">
+                            <col width="5%">
+                            <col width="95%">
                         </colgroup>
                         <thead>
                         <tr>
                             <th>文件名</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in post">
-                            <td v-if="item.access_url">
-                                <a href="javascript:;" :name="item.source_url" class="preview_file" @click="previewFile">{{ item.name }}</a>
+                            <td v-if="item.source_url">
+                                <a v-if="cdn === 'on'" href="javascript:;" :name="item.access_url" class="preview_file" @click="previewFile">{{ item.name }}</a>
+                                <a v-else href="javascript:;" :name="item.source_url" class="preview_file" @click="previewFile">{{ item.name }}</a>
                             </td>
                             <td v-else>
                                 <i class="layui-icon">&#xe622;</i>
                                 <a href="javascript:;" type="d" :name="item.name" @click="openFolder" class="open_folder">{{ item.name }}</a>
-                            </td>
-                            <td>
-                                <button class="layui-btn layui-btn-mini" type="button">删除</button>
                             </td>
                         </tr>
                         </tbody>
