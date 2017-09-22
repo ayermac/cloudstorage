@@ -28,7 +28,22 @@ layui.use(['layer'], function(){
                            list.cdn  = res.cdn;
                            list.navbar = window.location.hash.replace('#', '');
                        } else {
-                           layer.msg(res.message, function () {})
+                           layer.msg(res.message, function () {
+                               if (res.code === 10000 || res.code === -97) {
+                                   var index = layer.open({
+                                       type: 2,
+                                       title: '设置',
+                                       shadeClose: false,
+                                       shade: 0.6,
+                                       maxmin: false,
+                                       area: ['600px', '500px'],
+                                       content: '/index/index/setting' //iframe的url
+                                   });
+                                   if(window.screen.width < 768) {
+                                       layer.full(index);
+                                   }
+                               }
+                           });
                        }
                        $(".layui-loading-mask").removeClass('active');
                    },
