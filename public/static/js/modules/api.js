@@ -16,7 +16,7 @@ layui.use(['layer'], function(){
                  */
                 $.ajax({
                    url: '/api/cos/listFolder/',
-                   type: 'post',
+                   type: 'get',
                    dataType: 'json',
                    data: { "folder": folder },
                    beforeSend: function () {

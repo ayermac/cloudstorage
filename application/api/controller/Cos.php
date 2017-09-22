@@ -78,7 +78,7 @@ class Cos extends Controller {
      * 腾讯云COS上传
      * @return \think\response\Json
      */
-    public function CosUpload($folder = "/")
+    public function cosUpload($folder = "/")
     {
         // 存储桶名字
         $bucket = $this->bucket;
