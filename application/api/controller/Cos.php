@@ -87,8 +87,8 @@ class Cos extends Controller {
         $images = $this->request->file('images');
 
         // 上传到本地，并验证
-        $upload_path = str_replace('\\', '/', ROOT_PATH . 'public' . DS . 'uploads');
-        $info   = $images->validate($config)->move($upload_path);
+        $upload_path = str_replace('\\', '/', ROOT_PATH . 'public' . DS . 'uploads' . DS . date('Ymd', time()) . DS);
+        $info   = $images->validate($config)->move($upload_path,'',false);
 
         if($info) {
             $src = $info->getPathname();
