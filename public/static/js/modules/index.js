@@ -1,22 +1,10 @@
 /**
  项目JS主入口
  **/
-layui.define(['layer', 'form', 'element', 'upload'], function(exports){
+layui.define(['layer', 'form', 'element'], function(exports){
     var layer = layui.layer
         ,form = layui.form
-        ,element = layui.element
-        ,upload = layui.upload;
-
-    // layer.msg('Hello World');
-
-    //拖拽上传
-    upload.render({
-        elem: '#upload'
-        ,url: '/upload/'
-        ,done: function(res){
-            console.log(res)
-        }
-    });
+        ,element = layui.element;
 
     $('.open_setting').on('click', function () {
         var index = layer.open({
@@ -41,7 +29,10 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports){
             shadeClose: false,
             shade: 0.6,
             area: ['600px', '500px'],
-            content: '/index/index/uploadpage' //iframe的url
+            content: '/index/index/uploadpage', //iframe的url
+            end: function () {
+                window.location.reload();
+            }
         });
         if(window.screen.width < 768) {
             layer.full(index);
@@ -84,11 +75,6 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports){
     $('.close-iframe').on('click', function () {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
-    });
-
-    layer.photos({
-        photos: '#layer-photos-demo'
-        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
     });
 
     exports('index', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致

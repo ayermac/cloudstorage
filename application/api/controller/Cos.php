@@ -70,4 +70,47 @@ class Cos extends Controller {
 
         return json($ret);
     }
+
+    /**
+     * 腾讯云COS上传
+     * @return \think\response\Json
+     */
+    public function CosUpload($folder = "/")
+    {
+        // 存储桶名字
+        $bucket = $this->bucket;
+
+        $config = [
+            'size' => 10485760,//大小10M
+            'ext'  => 'jpg,jpeg,gif,png,bmp'
+        ];
+        $images = $this->request->file('images');
+
+        // 上传到本地，并验证
+        $upload_path = str_replace('\\', '/', ROOT_PATH . 'public' . DS . 'uploads');
+        $info   = $images->validate($config)->move($upload_path);
+
+        if($info) {
+            $src = $info->getPathname();
+            $dst = $folder . $info->getFilename();
+            // 上传图片
+            $ret = $this->cosApi->upload($bucket, $src, $dst);
+
+            if ($ret['message'] == 'SUCCESS') {
+                $result = [
+                    'error'   => 0,
+                    'url'     => $ret['data']['source_url'],
+                    'message' => '上传成功'
+                ];
+            } else {
+                return json($ret);
+            }
+        } else {
+            $result = [
+                'error'   => 1,
+                'message' => $images->getError()
+            ];
+        }
+        return json($result);
+    }
 }
