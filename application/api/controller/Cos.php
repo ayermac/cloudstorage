@@ -91,13 +91,13 @@ class Cos extends Controller {
 
         // 由于要验证上传的文件，ThinkPHP 必须传到本地之后才能验证。
         $upload_path = str_replace('\\', '/', ROOT_PATH . 'public' . DS . 'uploads' . DS . date('Ymd', time()) . DS);
-        $info   = $images->validate($config)->move($upload_path,'',false);
+        $info   = $images->validate($config)->move($upload_path,'',true);
 
         if($info) {
             $src = $info->getPathname();
             $dst = $folder . $info->getFilename();
             // 上传图片
-            $ret = $this->cosApi->upload($bucket, $src, $dst);
+            $ret = $this->cosApi->upload($bucket, $src, $dst, null, null, 0);
 
             if ($ret['message'] == 'SUCCESS') {
                 $result = [
@@ -131,17 +131,23 @@ class Cos extends Controller {
             ];
         } else {
             $ret= $this->cosApi->delFile($this->bucket, $dst);
-        }
 
-        if ($ret['code'] === 0) {
-            $ret['msg'] = '删除成功';
-        } else {
-            $ret['msg'] = '删除失败';
+            if ($ret['code'] === 0) {
+                $ret['msg'] = '删除成功';
+            } else {
+                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                $ret['msg'] = '删除失败';
+            }
         }
 
         return json($ret);
     }
 
+    /**
+     * 删除文件夹
+     * @param $dst
+     * @return \think\response\Json
+     */
     public function delFolder($dst)
     {
         if (empty($dst)) {
@@ -151,15 +157,47 @@ class Cos extends Controller {
             ];
         } else {
             $ret = $this->cosApi->delFolder($this->bucket, $dst);
+
+            if ($ret['code'] === 0) {
+                $ret['msg'] = '删除成功';
+            } elseif ($ret['code'] === -197) {
+                $ret['msg'] = '删除失败，当前文件夹中存在有效数据，请确认。';
+            } else {
+                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                $ret['msg'] = '删除失败';
+            }
         }
 
-        if ($ret['code'] === 0) {
-            $ret['msg'] = '删除成功';
-        } elseif ($ret['code'] === -197) {
-            $ret['msg'] = '删除失败，当前文件夹中存在有效数据，请确认。';
-        }
-        else {
-            $ret['msg'] = '删除失败';
+        return json($ret);
+    }
+
+    /**
+     * 创建文件夹
+     * @param string $folder
+     * @return \think\response\Json
+     */
+    public function createFolder($folder = "/")
+    {
+        $data = $this->request->post();
+        // 去除所有空格
+        $folder     = preg_replace('# #','',$folder);
+        // 计算长度
+        $folder_len = mb_strlen($data['value'], 'utf-8');
+
+        if ($folder_len > 20) {
+            $ret['code'] = 1;
+            $ret['msg'] = '最多支持 20 个字符';
+        } else {
+            $ret = $this->cosApi->createFolder($this->bucket, $folder);
+
+            if ($ret['code'] === 0) {
+                $ret['msg'] = '创建成功';
+            } elseif ($ret['code'] === -178) {
+                $ret['msg'] = '存在重复的文件夹';
+            } else {
+                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                $ret['msg'] = '创建失败';
+            }
         }
 
         return json($ret);

@@ -26,10 +26,15 @@
                             <p class="layui-loading-text">拼命加载中</p>
                         </div>
                     </div>
-                    <span class="layui-breadcrumb">
-                      <a v-if="navbar === ''" href="">首页</a>
-                      <a v-else href="javascript:history.go(-1);"><i class="layui-icon">&#xe603;</i> 返回上一级</a>
-                    </span>
+                    <div class="layui-btn-group bottom20">
+                        <button class="layui-btn layui-btn-small" @click="createAction"><i class="layui-icon">&#xe654;</i> 创建文件夹</button>
+                    </div>
+                    <div>
+                        <span class="layui-breadcrumb">
+                          <a v-if="navbar === ''" href="">首页</a>
+                          <a v-else href="javascript:history.go(-1);"><i class="layui-icon">&#xe603;</i> 返回上一级</a>
+                        </span>
+                    </div>
                     <table class="layui-table" lay-even lay-skin="nob">
                         <colgroup>
                             <col width="82%">

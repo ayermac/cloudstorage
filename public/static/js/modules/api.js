@@ -53,7 +53,7 @@ layui.use(['layer'], function(){
                    }
                 });
             },
-            delFile: function (api, dst, folder) {
+            delFile: function (api, dst, hash) {
                 /**
                  * 删除文件和文件夹
                  */
@@ -69,7 +69,7 @@ layui.use(['layer'], function(){
                         if (res.code === 0) {
                             layer.msg(res.msg, { icon: 1 }, function () {
                                 // 重新渲染列表
-                                list.getList(folder);
+                                list.getList(hash);
                             });
                         } else {
                             layer.msg(res.msg, function () {});
@@ -82,6 +82,38 @@ layui.use(['layer'], function(){
                         });
                     }
                 });
+            },
+
+            createFolder: function (folder, value, hash) {
+                /**
+                 * 创建文件夹
+                 */
+                $.ajax({
+                    url: '/api/cos/createFolder/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: { "folder": folder, "value": value },
+                    beforeSend: function () {
+                        loading = layer.load();
+                    },
+                    success: function (res) {
+                        if (res.code === 0) {
+                            layer.msg(res.msg, { icon: 1 }, function () {
+                                // 重新渲染列表
+                                list.getList(hash);
+                            });
+                        } else {
+                            layer.msg(res.msg, function () {});
+                        }
+                        layer.close(loading);
+                    },
+                    error: function () {
+                        layer.msg('HTTP ERROR', function () {
+                            layer.close(loading);
+                        });
+                    }
+                });
+
             },
             openFolder: function (event) {
                 var $query = event.target
@@ -109,6 +141,24 @@ layui.use(['layer'], function(){
                     // 判断删除的是文件还是文件夹
                     type==='d' ? list.delFile('/api/cos/delFolder/', dst, hash) : list.delFile('/api/cos/delFile/', dst, hash);
                 }, function(){
+                });
+            },
+            createAction: function (event) {
+                var $query = event.target
+                    ,hash = '/' + window.location.hash.replace('#', '')
+                    ,folder;
+
+                layer.prompt({
+                    title:'新建文件夹'
+                }, function(value, index, elem){
+                    folder = hash + value;
+                    if (!$.trim(value)) {
+                        layer.msg('文件夹名称不能为空', function () {});
+                    } else {
+                        // 创建文件夹
+                        list.createFolder(folder, value, hash);
+                        layer.close(index);
+                    }
                 });
             },
             previewFile: function (event) {

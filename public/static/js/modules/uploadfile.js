@@ -35,8 +35,8 @@ layui.define(['layer', 'element'], function(exports){
         },
         init: {
             FilesAdded: function (up, files) { //文件上传前
-                $(".layui-progress").html('<div class="layui-progress-bar" lay-percent="0%"></div>');
                 element.init();
+                element.progress('uploadprogress', '0%');
                 uploader.start();
             },
             UploadProgress: function (up, file) { //上传中，显示进度条
