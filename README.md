@@ -20,7 +20,7 @@
 * 数据库配置文件 application/database.php
 * 如果需要使用 cdn 链接，可以在账号配置界面开启 cdn
 
-> 说明: CDN 为付费产品，使用之前请先确保开启这项服务。新用户可以免费使用腾讯云 50G 的云存储空间，对于一般的存储来说已经够用了。具体情况请查看[腾讯云官网](https://console.cloud.tencent.com/cos4/index)。
+> 说明: CDN 为付费产品，使用之前请先确保开启这项服务。新用户可以免费使用腾讯云 50G 的云存储空间，对于一般的存储来说已经够用了。具体情况请查看[腾讯云官网](https://cloud.tencent.com/product/cos)。
 
 
 # 服务器环境
