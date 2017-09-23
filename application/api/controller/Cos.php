@@ -116,4 +116,53 @@ class Cos extends Controller {
         }
         return json($result);
     }
+
+    /**
+     * 删除文件
+     * @param $dst
+     * @return \think\response\Json
+     */
+    public function delFile($dst)
+    {
+        if (empty($dst)) {
+            $ret = [
+                'code'   => 1,
+                'message' => '请选择需要删除的文件'
+            ];
+        } else {
+            $ret= $this->cosApi->delFile($this->bucket, $dst);
+        }
+
+        if ($ret['code'] === 0) {
+            $ret['msg'] = '删除成功';
+        } else {
+            $ret['msg'] = '删除失败';
+        }
+
+        return json($ret);
+    }
+
+    public function delFolder($dst)
+    {
+        if (empty($dst)) {
+            $ret = [
+                'code'   => 1,
+                'message' => '请选择需要删除的文件夹'
+            ];
+        } else {
+            $ret = $this->cosApi->delFolder($this->bucket, $dst);
+        }
+
+        if ($ret['code'] === 0) {
+            $ret['msg'] = '删除成功';
+        } elseif ($ret['code'] === -197) {
+            $ret['msg'] = '删除失败，当前文件夹中存在有效数据，请确认。';
+        }
+        else {
+            $ret['msg'] = '删除失败';
+        }
+
+        return json($ret);
+    }
+
 }

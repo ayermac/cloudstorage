@@ -1,6 +1,7 @@
 layui.use(['layer'], function(){
     var layer = layui.layer
-        ,url = '';
+        ,url = ''
+        ,loading;
 
     var list = new Vue({
         el: '#mainlist',
@@ -52,6 +53,36 @@ layui.use(['layer'], function(){
                    }
                 });
             },
+            delFile: function (api, dst, folder) {
+                /**
+                 * 删除文件和文件夹
+                 */
+                $.ajax({
+                    url: api,
+                    type: 'post',
+                    dataType: 'json',
+                    data: { "dst": dst },
+                    beforeSend: function () {
+                        loading = layer.load();
+                    },
+                    success: function (res) {
+                        if (res.code === 0) {
+                            layer.msg(res.msg, { icon: 1 }, function () {
+                                // 重新渲染列表
+                                list.getList(folder);
+                            });
+                        } else {
+                            layer.msg(res.msg, function () {});
+                        }
+                        layer.close(loading);
+                    },
+                    error: function () {
+                        layer.msg('HTTP ERROR', function () {
+                            layer.close(loading);
+                        });
+                    }
+                });
+            },
             openFolder: function (event) {
                 var $query = event.target
                     ,hash;
@@ -61,6 +92,24 @@ layui.use(['layer'], function(){
                 hash = window.location.hash.replace('#', '');
                 // console.log(hash);
                 this.getList(hash);
+            },
+            delAction: function (event) {
+                var $query = event.target
+                    ,hash = '/' + window.location.hash.replace('#', '')
+                    ,name = $query.name
+                    ,type = $query.value
+                    ,dst = hash + name;
+                console.log(dst);
+
+                layer.confirm('确定删除 <b>"'+ name +'"</b> 吗？<br> 删除后数据不可恢复和访问。', {
+                    icon: 7,
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    layer.close(index);
+                    // 判断删除的是文件还是文件夹
+                    type==='d' ? list.delFile('/api/cos/delFolder/', dst, hash) : list.delFile('/api/cos/delFile/', dst, hash);
+                }, function(){
+                });
             },
             previewFile: function (event) {
                 var $query = event.target
