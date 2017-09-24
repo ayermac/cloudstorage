@@ -1,7 +1,7 @@
 # cloudstorage
 由 ThinkPHP 驱动，使用腾讯云对象存储 PHP SDK 写的一套简易云存储管理
 
-![cloud storage](http://cblog-1252077432.file.myqcloud.com/cloudstorage/cloudstorage1.1.gif)
+![cloud storage](http://cblog-1252077432.file.myqcloud.com/cloudstorage/cloudstorage1.2.gif)
 
 # 主要使用到的 JS 插件
 * Layui ( UI )
