@@ -164,7 +164,7 @@ layui.use(['layer'], function(){
             previewFile: function (event) {
                 var $query = event.target
                     ,file_url = $query.name
-                    ,img = '<div class="center"><img src="' + file_url + '"></div>'
+                    ,img = '<div class="center" id="preview-photos"><img layer-src="' + file_url + '" src="' + file_url + '"></div>'
                     ,files = '<div class="center"><i class="layui-icon" style="font-size: 100px;">&#xe61d;</i><div><a class="layui-btn" href="' + file_url + '">下载</a></div></div>'
                     ,imgArray = ['.png', '.jpg', '.jpeg', '.gif'];
 
@@ -176,6 +176,11 @@ layui.use(['layer'], function(){
                     ,maxmin: false
                     ,anim: 0
                     ,content: this.checkString(file_url, imgArray) ? img : files
+                });
+                // 点击图片弹出层
+                layer.photos({
+                    photos: '#preview-photos'
+                    ,anim: 5
                 });
                 layer.full(index);
             },
