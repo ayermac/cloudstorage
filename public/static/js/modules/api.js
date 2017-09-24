@@ -29,7 +29,7 @@ layui.use(['layer'], function(){
                            list.cdn  = res.cdn;
                            list.navbar = window.location.hash.replace('#', '');
                        } else {
-                           layer.msg(res.message, function () {
+                           layer.msg(res.msg, function () {
                                if (res.code === 10000 || res.code === -97) {
                                    var index = layer.open({
                                        type: 2,

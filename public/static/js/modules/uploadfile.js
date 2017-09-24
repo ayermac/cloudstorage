@@ -46,17 +46,17 @@ layui.define(['layer', 'element'], function(exports){
             FileUploaded: function (up, file, info) { //文件上传成功的时候触发
                 var data = JSON.parse(info.response);
 
-                if (data.error === 0) {
-                    layer.msg(data.message, { icon: 1 }, function () {});
+                if (data.code === 0) {
+                    layer.msg(data.msg, { icon: 1 }, function () {});
                 } else {
-                    layer.msg(data.message, function () {});
+                    layer.msg(data.msg, function () {});
                 }
             },
             UploadComplete: function () { // 当上传队列中所有文件都上传完成后触发监听
                 // parent.location.reload();
             },
             Error: function (up, err) { //上传出错的时候触发
-                layer.msg(err.message, function(){});
+                layer.msg(err.msg, function(){});
             }
         }
     });

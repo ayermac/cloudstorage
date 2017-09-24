@@ -34,8 +34,7 @@ class Cos extends Controller {
         $count = $this->user_setting_model->where(['app_id'=>Cookie::get('appid')])->count();
         if (!Cookie::get('appid') || $count <=0) {
             $result = [
-                'error'   => 1,
-                'message' => '请先进行配置',
+                'msg' => '请先进行配置',
                 'code'    => 10000, // api 初始化错误代码
             ];
             exit($this->response($result)->send());
@@ -71,6 +70,10 @@ class Cos extends Controller {
         $ret        = $this->cosApi->listFolder($this->bucket, $folder);
         $ret['cdn'] = $this->cdn;
 
+        if ($ret['code'] === -97) {
+            $ret['msg'] = '账号认证错误，请重新配置';
+        }
+
         return json($ret);
     }
 
@@ -101,17 +104,17 @@ class Cos extends Controller {
 
             if ($ret['message'] == 'SUCCESS') {
                 $result = [
-                    'error'   => 0,
+                    'code'   => 0,
                     'url'     => $ret['data']['source_url'],
-                    'message' => '上传成功'
+                    'msg' => '上传成功'
                 ];
             } else {
                 return json($ret);
             }
         } else {
             $result = [
-                'error'   => 1,
-                'message' => $images->getError()
+                'code'   => 1,
+                'msg' => $images->getError()
             ];
         }
         return json($result);
@@ -127,7 +130,7 @@ class Cos extends Controller {
         if (empty($dst)) {
             $ret = [
                 'code'   => 1,
-                'message' => '请选择需要删除的文件'
+                'msg' => '请选择需要删除的文件'
             ];
         } else {
             $ret= $this->cosApi->delFile($this->bucket, $dst);
@@ -153,7 +156,7 @@ class Cos extends Controller {
         if (empty($dst)) {
             $ret = [
                 'code'   => 1,
-                'message' => '请选择需要删除的文件夹'
+                'msg' => '请选择需要删除的文件夹'
             ];
         } else {
             $ret = $this->cosApi->delFolder($this->bucket, $dst);
