@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Cookie;
+use think\Session;
 use app\index\model\UserSetting as UserSettingModel;
 
 class Index extends Controller
@@ -12,12 +13,16 @@ class Index extends Controller
     protected function _initialize()
     {
         parent::_initialize();
+        if(!Session::has('user_id')) {
+            $this->redirect('index/login/index');
+        }
         $this->user_setting_model = new UserSettingModel();
     }
 
     public function index()
     {
-        return $this->fetch('index');
+        $username = Session::get('user_name');
+        return $this->fetch('index', ['name' => $username]);
     }
 
     public function setting()
