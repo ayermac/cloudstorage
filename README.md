@@ -1,7 +1,7 @@
 # CloudStorage
 由 ThinkPHP 驱动，使用腾讯云对象存储 PHP SDK 写的一套简易云存储管理
 
-![cloud storage](http://cblog-1252077432.file.myqcloud.com/cloudstorage/cloudstorage1.2.gif)
+![cloud storage](http://cblog-1252077432.file.myqcloud.com/cloudstorage/cloudstorage1.3.gif)
 
 # 主要使用到的 JS 插件
 * Layui ( UI )
@@ -10,6 +10,7 @@
 * Jquery-hashchange ( 浏览器 Hash 监听 )
 
 # 功能
+* 管理账号注册和登录
 * 腾讯云存储账号配置
 * 上传 ( 暂时只支持图片 )
 * 图片预览 和 文件下载
