@@ -9,7 +9,6 @@ namespace app\api\controller;
 
 use app\index\model\UserSetting;
 use think\Controller;
-use think\Cookie;
 use think\Session;
 use think\Response;
 use app\index\model\UserSetting as UserSettingModel;
@@ -40,15 +39,15 @@ class Cos extends Controller {
 
         $this->user_setting_model = new UserSettingModel();
 
-        $count = $this->user_setting_model->where(['app_id'=>Cookie::get('appid')])->count();
-        if (!Cookie::get('appid') || $count <=0) {
+        $count = $this->user_setting_model->where(['user_id'=>Session::get('user_id')])->count();
+        if ($count <=0) {
             $result = [
                 'msg' => '请先进行配置',
                 'code'    => 10000, // api 初始化错误代码
             ];
             exit($this->response($result)->send());
         }
-        $data = $this->user_setting_model->where(['app_id'=>Cookie::get('appid')])->find()->toArray();
+        $data = $this->user_setting_model->where(['user_id'=>Session::get('user_id')])->find()->toArray();
         $config['app_id']      = $data['app_id'];
         $config['secret_id']   = $data['secret_id'];
         $config['secret_key']  = $data['secret_key'];
