@@ -6,6 +6,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         ,form = layui.form
         ,element = layui.element;
 
+    // 设置
     $('.open_setting').on('click', function () {
         var index = layer.open({
             type: 2,
@@ -21,6 +22,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         }
     });
 
+    // 上传
     $('.open_upload').on('click', function () {
         var index = layer.open({
             type: 2,

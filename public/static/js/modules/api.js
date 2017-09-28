@@ -131,7 +131,6 @@ layui.use(['layer'], function(){
                     ,name = $query.name
                     ,type = $query.value
                     ,dst = hash + name;
-                console.log(dst);
 
                 layer.confirm('确定删除 <b>"'+ name +'"</b> 吗？<br> 删除后数据不可恢复和访问。', {
                     icon: 7,

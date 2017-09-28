@@ -146,7 +146,7 @@ class Cos extends Controller {
             if ($ret['code'] === 0) {
                 $ret['msg'] = '删除成功';
             } else {
-                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                // 这里只给自定义的错误消息，详细 message 请在 response 查看
                 $ret['msg'] = '删除失败';
             }
         }
@@ -174,7 +174,7 @@ class Cos extends Controller {
             } elseif ($ret['code'] === -197) {
                 $ret['msg'] = '删除失败，当前文件夹中存在有效数据，请确认。';
             } else {
-                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                // 这里只给自定义的错误消息，详细 message 请在 response 查看
                 $ret['msg'] = '删除失败';
             }
         }
@@ -206,7 +206,7 @@ class Cos extends Controller {
             } elseif ($ret['code'] === -178) {
                 $ret['msg'] = '存在重复的文件夹';
             } else {
-                // 这里只给自定义的错误，详细错误 message 请在 response 查看
+                // 这里只给自定义的错误消息，详细 message 请在 response 查看
                 $ret['msg'] = '创建失败';
             }
         }
