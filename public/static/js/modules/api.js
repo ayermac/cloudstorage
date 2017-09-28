@@ -30,7 +30,7 @@ layui.use(['layer'], function(){
                            list.navbar = window.location.hash.replace('#', '');
                        } else {
                            layer.msg(res.msg, function () {
-                               if (res.code === 10000 || res.code === -97) {
+                               if (res.code === 10000 || res.code === -97 || res.code === -133) {
                                    var index = layer.open({
                                        type: 2,
                                        title: '设置',

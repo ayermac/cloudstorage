@@ -80,6 +80,8 @@ class Cos extends Controller {
 
         if ($ret['code'] === -97) {
             $ret['msg'] = '账号认证错误，请重新配置';
+        } elseif ($ret['code'] === -133) {
+            $ret['msg'] = '该区域的存储桶不存在，请重新配置';
         }
 
         return json($ret);
