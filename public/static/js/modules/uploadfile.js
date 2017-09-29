@@ -1,8 +1,8 @@
 layui.define(['layer', 'element'], function(exports){
     var layer = layui.layer
         ,element = layui.element
-        ,hash = '/' + parent.location.hash.replace('#', '');
-    console.log(hash);
+        ,hash = '/' + parent.location.hash.replace('#', '')
+        ,load;
 
     /**
      * 上传
@@ -37,6 +37,7 @@ layui.define(['layer', 'element'], function(exports){
             FilesAdded: function (up, files) { //文件上传前
                 element.init();
                 element.progress('uploadprogress', '0%');
+                load = layer.load();
                 uploader.start();
             },
             UploadProgress: function (up, file) { //上传中，显示进度条
@@ -51,12 +52,14 @@ layui.define(['layer', 'element'], function(exports){
                 } else {
                     layer.msg(data.msg, function () {});
                 }
+                layer.close(load);
             },
             UploadComplete: function () { // 当上传队列中所有文件都上传完成后触发监听
                 // parent.location.reload();
             },
             Error: function (up, err) { //上传出错的时候触发
                 layer.msg(err.msg, function(){});
+                layer.close(load);
             }
         }
     });
