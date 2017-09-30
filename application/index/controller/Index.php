@@ -12,6 +12,7 @@ class Index extends Controller
     protected function _initialize()
     {
         parent::_initialize();
+        // 判断用户是否登录
         if(!Session::has('user_id')) {
             $this->redirect('index/login/index');
         }
@@ -24,6 +25,10 @@ class Index extends Controller
         return $this->fetch('index', ['name' => $username]);
     }
 
+    /**
+     * 用户存储账号设置页面
+     * @return mixed
+     */
     public function setting()
     {
         $data = $this->user_setting_model->where(['user_id' => Session::get('user_id')])->find();
@@ -31,6 +36,9 @@ class Index extends Controller
         return $this->fetch('setting', ['setting' => $data]);
     }
 
+    /**
+     * 用户存储账号设置
+     */
     public function userSetting()
     {
         if ($this->request->isPost()) {
@@ -60,6 +68,10 @@ class Index extends Controller
         }
     }
 
+    /**
+     * 文件上传页面
+     * @return mixed
+     */
     public function uploadPage()
     {
         return $this->fetch('upload');
