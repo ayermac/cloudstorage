@@ -39,6 +39,7 @@ class Cos extends Controller {
 
         $this->user_setting_model = new UserSettingModel();
 
+        // 判断用户是否已经设置云存储账号
         $count = $this->user_setting_model->where(['user_id'=>Session::get('user_id')])->count();
         if ($count <=0) {
             $result = [
@@ -58,6 +59,7 @@ class Cos extends Controller {
         // 判断是否使用 cdn
         $this->cdn    = $data['cdn'];
 
+        // 实例化 QCloud Api
         $this->cosApi = new Api($config);
     }
 
@@ -71,7 +73,7 @@ class Cos extends Controller {
 
     /**
      * 获取列表数据
-     * url: /api/cos/getlist
+     * url: /api/cos/listFolder
      */
     public function listFolder($folder = "/")
     {
@@ -89,6 +91,7 @@ class Cos extends Controller {
 
     /**
      * 腾讯云COS上传
+     * url: /api/cos/cosUpload
      * @return \think\response\Json
      */
     public function cosUpload($folder = "/")
@@ -132,6 +135,7 @@ class Cos extends Controller {
 
     /**
      * 删除文件
+     * url: /api/cos/delFile
      * @param $dst
      * @return \think\response\Json
      */
@@ -158,6 +162,7 @@ class Cos extends Controller {
 
     /**
      * 删除文件夹
+     * url: /api/cos/delFolder
      * @param $dst
      * @return \think\response\Json
      */
@@ -186,6 +191,7 @@ class Cos extends Controller {
 
     /**
      * 创建文件夹
+     * url: /api/cos/createFolder
      * @param string $folder
      * @return \think\response\Json
      */
