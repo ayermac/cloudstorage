@@ -58,7 +58,7 @@ layui.define(['layer', 'element'], function(exports){
                 // parent.location.reload();
             },
             Error: function (up, err) { //上传出错的时候触发
-                layer.msg(err.msg, function(){});
+                layer.msg(err.message, function(){});
                 layer.close(load);
             }
         }
